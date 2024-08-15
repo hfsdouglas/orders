@@ -1,4 +1,4 @@
-import { SafeAreaView } from "react-native"
+import { SafeAreaView, StatusBar } from "react-native"
 import { Slot } from "expo-router"
 
 import {
@@ -25,6 +25,7 @@ export default function Layout() {
 
     return (
         <SafeAreaView className="flex-1 bg-slate-900 pt-8">
+            <StatusBar barStyle={"light-content"} translucent />
             <Slot />
         </SafeAreaView>
     )
