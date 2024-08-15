@@ -9,6 +9,8 @@ import {
     useFonts,
 } from "@expo-google-fonts/inter"
 
+import { Loading } from "@/components/loading"
+
 export default function Layout() {
     const [fonts] = useFonts({
         Inter_400Regular, 
@@ -18,7 +20,7 @@ export default function Layout() {
     })
 
     if (!fonts) {
-        return
+        return <Loading />
     }
 
     return (
