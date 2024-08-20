@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Alert, ScrollView, Text, View } from "react-native"
+import { Alert, ScrollView, Text, View, Linking } from "react-native"
 import { useNavigation } from "expo-router"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview"
 import { Feather } from "@expo/vector-icons"
@@ -13,6 +13,8 @@ import { ProductCartProps, useCartStore } from "@/stores/cart-store"
 import { Input } from "@/components/input"
 import { Button } from "@/components/button"
 import { LinkButton } from "@/components/link-button"
+
+const PHONE_NUMBER = "55...";
 
 export default function Cart() {
     const [address, setAddress] = useState("")
@@ -41,13 +43,13 @@ export default function Cart() {
         const products = cartStore.products.map((product) => `\n \u2022 ${product.quantity} ${product.title}`).join("")
 
         const message = `
-            🍔 Novo Pedido \n
-            🛵 Entregar em: ${address} \n
-            📦 Produtos: ${products} \n
-            💰 Total: ${total}
+        🍔 Novo Pedido
+        \n🛵 Entregar em: ${address}
+        \n📦 Produtos: ${products}
+        \n💰 Total: ${total}
         `
-
         console.log(message)
+        Linking.openURL(`http://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${message}`)
 
         cartStore.clear()
 
@@ -78,7 +80,7 @@ export default function Cart() {
                             <Text className="text-lime-400 text-xl font-heading">{total}</Text>
                         </View>
 
-                        <Input placeholder="Informe o endereço de entrega com rua, bairro, CEP, número e complemento" onChangeText={setAddress} value={address} />
+                        <Input placeholder="Informe o endereço de entrega com rua, bairro, CEP, número e complemento" onChangeText={setAddress} value={address} onSubmitEditing={handleOrder} blurOnSubmit returnKeyType="next"/>
                     </View>
                 </ScrollView>
             </KeyboardAwareScrollView>
