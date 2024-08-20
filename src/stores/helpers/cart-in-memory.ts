@@ -13,3 +13,18 @@ export function add(products: ProductCartProps[], newProduct: ProductProps) {
 
     return [...products, { ...newProduct, quantity: 1 }]
 }
+
+export function remove(products: ProductCartProps[], productRemovedId: string) {
+    const updatedProduct = products.map((product) => {
+        if (product.id === productRemovedId) {
+            return {
+                ...product, 
+                quantity: product.quantity > 1 ? product.quantity - 1 : 0
+            }
+        }
+        
+        return product
+    })
+
+    return updatedProduct.filter((product) => product.quantity > 0)
+}
